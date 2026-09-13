@@ -1,6 +1,7 @@
 import Sidebar from "@/components/dashboard/Sidebar";
 import MetricCard from "@/components/dashboard/MetricCard";
 import RevenueChart from "@/components/dashboard/RevenueChart";
+import UserGrowthChart from "@/components/dashboard/UserGrowthChart";
 
 export default function Home() {
   return (
@@ -24,6 +25,10 @@ export default function Home() {
 
         <div className="mt-8">
           <RevenueChart />
+        </div>
+
+        <div className="mt-8">
+          <UserGrowthChart />
         </div>
       </section>
     </main>
