@@ -1,0 +1,58 @@
+// use prisma-8
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+
+  organizationMembers OrganizationMember[]
+  subscriptions      Subscription[]
+  events             Event[]
+}
+
+model Organization {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+
+  members       OrganizationMember[]
+  subscriptions Subscription[]
+  events        Event[]
+}
+
+model OrganizationMember {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  createdAt      TimestamptzString @default(now())
+}
+
+model Subscription {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  plan           String
+  status         String
+  monthlyPrice   Decimal
+  startedAt      TimestamptzString @default(now())
+  canceledAt     TimestamptzString?
+  createdAt      TimestamptzString @default(now())
+  updatedAt      temporal.updatedAtString()
+}
+
+model Event {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  name           String
+  createdAt      TimestamptzString @default(now())
+}
