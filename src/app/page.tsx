@@ -1,5 +1,6 @@
 import Sidebar from "@/components/dashboard/Sidebar";
 import MetricCard from "@/components/dashboard/MetricCard";
+import RevenueChart from "@/components/dashboard/RevenueChart";
 
 export default function Home() {
   return (
@@ -19,6 +20,10 @@ export default function Home() {
           <MetricCard title="Churn Rate" value="2.4%" change="-0.8%" />
 
           <MetricCard title="ARPU" value="$48.20" change="+5.2%" />
+        </div>
+
+        <div className="mt-8">
+          <RevenueChart />
         </div>
       </section>
     </main>
