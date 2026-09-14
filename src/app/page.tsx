@@ -30,6 +30,12 @@ export default async function Home() {
           />
 
           <MetricCard
+            title="ARR"
+            value={`$${metrics.arr.toFixed(2)}`}
+            change="Annual recurring revenue"
+          />
+
+          <MetricCard
             title="Active Users"
             value={metrics.activeUsers.toString()}
             change="Registered users"

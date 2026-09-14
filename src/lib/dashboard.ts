@@ -18,8 +18,11 @@ export async function getDashboardMetrics() {
 
   const arpu = activeUsers > 0 ? mrr / activeUsers : 0;
 
+  const arr = mrr * 12;
+
   return {
     mrr,
+    arr,
     activeUsers,
     arpu,
     eventCount: events.length,
