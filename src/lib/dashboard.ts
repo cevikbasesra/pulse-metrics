@@ -14,10 +14,14 @@ export async function getDashboardMetrics() {
     0,
   );
 
-  const previousMrr = 400;
+  const revenueData = await getRevenueData();
+
+  const currentMrr = revenueData[revenueData.length - 1]?.revenue ?? 0;
+
+  const previousMrr = revenueData[revenueData.length - 2]?.revenue ?? 0;
 
   const revenueGrowth =
-    previousMrr > 0 ? ((mrr - previousMrr) / previousMrr) * 100 : 0;
+    previousMrr > 0 ? ((currentMrr - previousMrr) / previousMrr) * 100 : 0;
 
   const activeUsers = users.length;
 
@@ -40,22 +44,36 @@ export async function getRevenueData() {
   const monthlyRevenue = new Map<string, number>();
 
   for (const subscription of subscriptions) {
-    const month = new Date(subscription.startedAt).toLocaleDateString("en-US", {
-      month: "short",
-    });
+    const date = new Date(subscription.startedAt);
 
-    const currentRevenue = monthlyRevenue.get(month) ?? 0;
+    const monthKey = `${date.getFullYear()}-${String(
+      date.getMonth() + 1,
+    ).padStart(2, "0")}`;
+
+    const currentRevenue = monthlyRevenue.get(monthKey) ?? 0;
 
     monthlyRevenue.set(
-      month,
+      monthKey,
       currentRevenue + Number(subscription.monthlyPrice),
     );
   }
 
-  return Array.from(monthlyRevenue.entries()).map(([month, revenue]) => ({
-    month,
-    revenue,
-  }));
+  const sortedMonths = Array.from(monthlyRevenue.entries()).sort(([a], [b]) =>
+    a.localeCompare(b),
+  );
+
+  let cumulativeRevenue = 0;
+
+  return sortedMonths.map(([monthKey, revenue]) => {
+    cumulativeRevenue += revenue;
+
+    return {
+      month: new Date(`${monthKey}-01T00:00:00`).toLocaleDateString("en-US", {
+        month: "short",
+      }),
+      revenue: cumulativeRevenue,
+    };
+  });
 }
 export async function getUserGrowthData() {
   const users = await db.orm.public.User.all();
