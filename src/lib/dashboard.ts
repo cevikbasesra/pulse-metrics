@@ -14,6 +14,11 @@ export async function getDashboardMetrics() {
     0,
   );
 
+  const previousMrr = 400;
+
+  const revenueGrowth =
+    previousMrr > 0 ? ((mrr - previousMrr) / previousMrr) * 100 : 0;
+
   const activeUsers = users.length;
 
   const arpu = activeUsers > 0 ? mrr / activeUsers : 0;
@@ -26,6 +31,7 @@ export async function getDashboardMetrics() {
     activeUsers,
     arpu,
     eventCount: events.length,
+    revenueGrowth,
   };
 }
 export async function getRevenueData() {

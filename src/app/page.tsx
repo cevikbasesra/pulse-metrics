@@ -36,6 +36,12 @@ export default async function Home() {
           />
 
           <MetricCard
+            title="Revenue Growth"
+            value={`${metrics.revenueGrowth.toFixed(2)}%`}
+            change="Compared to previous MRR"
+          />
+
+          <MetricCard
             title="Active Users"
             value={metrics.activeUsers.toString()}
             change="Registered users"
