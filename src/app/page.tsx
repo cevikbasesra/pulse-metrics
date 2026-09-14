@@ -2,10 +2,16 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import MetricCard from "@/components/dashboard/MetricCard";
 import RevenueChart from "@/components/dashboard/RevenueChart";
 import UserGrowthChart from "@/components/dashboard/UserGrowthChart";
-import { getDashboardMetrics } from "@/lib/dashboard";
+import {
+  getDashboardMetrics,
+  getRevenueData,
+  getUserGrowthData,
+} from "@/lib/dashboard";
 
 export default async function Home() {
   const metrics = await getDashboardMetrics();
+  const revenueData = await getRevenueData();
+  const userGrowthData = await getUserGrowthData();
 
   return (
     <main className="flex min-h-screen bg-slate-100">
@@ -43,11 +49,11 @@ export default async function Home() {
         </div>
 
         <div className="mt-8">
-          <RevenueChart />
+          <RevenueChart data={revenueData} />
         </div>
 
         <div className="mt-8">
-          <UserGrowthChart />
+          <UserGrowthChart data={userGrowthData} />
         </div>
       </section>
     </main>

@@ -10,16 +10,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const revenueData = [
-  { month: "Jan", revenue: 12000 },
-  { month: "Feb", revenue: 15000 },
-  { month: "Mar", revenue: 18000 },
-  { month: "Apr", revenue: 17000 },
-  { month: "May", revenue: 22000 },
-  { month: "Jun", revenue: 24500 },
-];
+type RevenueData = {
+  month: string;
+  revenue: number;
+};
 
-export default function RevenueChart() {
+type RevenueChartProps = {
+  data: RevenueData[];
+};
+
+export default function RevenueChart({ data }: RevenueChartProps) {
   return (
     <div className="rounded-xl bg-white p-6 shadow-sm">
       <h2 className="text-xl font-semibold text-slate-900">Revenue Overview</h2>
@@ -28,7 +28,7 @@ export default function RevenueChart() {
 
       <div className="mt-6 h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={revenueData}>
+          <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
 
             <XAxis dataKey="month" />
