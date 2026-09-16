@@ -42,6 +42,12 @@ export default async function Home() {
           />
 
           <MetricCard
+            title="Churn Rate"
+            value={`${metrics.churnRate.toFixed(2)}%`}
+            change="Canceled subscriptions"
+          />
+
+          <MetricCard
             title="Active Users"
             value={metrics.activeUsers.toString()}
             change="Registered users"

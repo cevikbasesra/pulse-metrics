@@ -96,9 +96,10 @@ async function main() {
     userId: user5.id,
     organizationId: organization.id,
     plan: "pro",
-    status: "active",
+    status: "canceled",
     monthlyPrice: "109",
     startedAt: "2026-08-05T00:00:00.000Z",
+    canceledAt: "2026-09-10T00:00:00.000Z",
   });
 
   await db.orm.public.Subscription.create({

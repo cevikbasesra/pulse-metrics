@@ -23,6 +23,17 @@ export async function getDashboardMetrics() {
   const revenueGrowth =
     previousMrr > 0 ? ((currentMrr - previousMrr) / previousMrr) * 100 : 0;
 
+  const canceledSubscriptions = await db.orm.public.Subscription.where({
+    status: "canceled",
+  }).all();
+
+  const churnRate =
+    activeSubscriptions.length + canceledSubscriptions.length > 0
+      ? (canceledSubscriptions.length /
+          (activeSubscriptions.length + canceledSubscriptions.length)) *
+        100
+      : 0;
+
   const activeUsers = users.length;
 
   const arpu = activeUsers > 0 ? mrr / activeUsers : 0;
@@ -36,6 +47,7 @@ export async function getDashboardMetrics() {
     arpu,
     eventCount: events.length,
     revenueGrowth,
+    churnRate,
   };
 }
 export async function getRevenueData() {
