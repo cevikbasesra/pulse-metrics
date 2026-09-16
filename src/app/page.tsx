@@ -17,12 +17,14 @@ export default async function Home() {
     <main className="flex min-h-screen bg-slate-100">
       <Sidebar />
 
-      <section className="flex-1 p-8">
-        <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
+      <section className="flex-1 p-6 lg:p-8">
+        <h1 className="text-2xl font-bold text-slate-900 lg:text-3xl">
+          Dashboard
+        </h1>
 
         <p className="mt-2 text-slate-500">Welcome to PulseMetrics</p>
 
-        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           <MetricCard
             title="MRR"
             value={`$${metrics.mrr.toFixed(2)}`}
@@ -42,12 +44,6 @@ export default async function Home() {
           />
 
           <MetricCard
-            title="Churn Rate"
-            value={`${metrics.churnRate.toFixed(2)}%`}
-            change="Canceled subscriptions"
-          />
-
-          <MetricCard
             title="Active Users"
             value={metrics.activeUsers.toString()}
             change="Registered users"
@@ -60,17 +56,20 @@ export default async function Home() {
           />
 
           <MetricCard
+            title="Churn Rate"
+            value={`${metrics.churnRate.toFixed(2)}%`}
+            change="Canceled subscriptions"
+          />
+
+          <MetricCard
             title="Events"
             value={metrics.eventCount.toString()}
             change="Tracked events"
           />
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
           <RevenueChart data={revenueData} />
-        </div>
-
-        <div className="mt-8">
           <UserGrowthChart data={userGrowthData} />
         </div>
       </section>
